@@ -1,0 +1,17 @@
+{
+  "name": "apps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test":"mocha",
+    "build": "echo 'Building the application...'"
+   
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mocha": "^11.7.1"
+  }
+}
