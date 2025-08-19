@@ -1,13 +1,19 @@
 FROM node:18
 
+# Thư mục làm việc trong container
 WORKDIR /usr/src/app
 
-COPY test/package*.json ./
+# Copy package.json và package-lock.json
+COPY package*.json ./
 
-RUN npm install && npm run build
+# Cài dependencies
+RUN npm install
 
-COPY test/ .
+# Copy toàn bộ source code
+COPY . .
 
+# Mở port 3000
 EXPOSE 3000
 
+# Chạy app
 CMD ["node", "index.js"]
