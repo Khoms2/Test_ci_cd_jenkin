@@ -1,8 +1,8 @@
 FROM node:18
-WORKDIR /usr/src/APPS
-COPY .APPS/package*.json ./
+WORKDIR /usr/src/app
+COPY APPS/package*.json ./
 RUN npm install && npm run build
-COPY APPS .
+COPY APPS/ .
 EXPOSE 3000
 CMD ["node", "index.js"]
 # FROM node:18
