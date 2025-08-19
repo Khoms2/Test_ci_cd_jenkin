@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         // repo DockerHub của bạn
-        DOCKER_HUB_REPO = "VodongTao/tesh_push"
+        DOCKER_HUB_REPO = "vodongdao/tesh_push"
     }
 
     stages {
