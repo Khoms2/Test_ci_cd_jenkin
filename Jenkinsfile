@@ -95,6 +95,8 @@ pipeline {
     tools {
         nodejs 'NodeJS'
     }
+    environment {
+        DOCKER_HUB_REPO = "VodongTao/test_push"
 
     stages {
         stage('Checkout') {
@@ -113,6 +115,23 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t my-node-app:2.0 .'
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                withCredentials([usernamePassword(
+                    credentialsId: 'testpush',
+                    passwordVariable: 'DOCKER_PASSWORD',
+                    usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh '''
+                            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                            docker tag my-node-app:2.0 $DOCKER_HUB_REPO:2.0
+                            docker push $DOCKER_HUB_REPO:2.0
+                        '''
+                    )}
+                }
+              
             }
         }
     }
