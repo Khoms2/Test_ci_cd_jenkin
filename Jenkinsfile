@@ -54,33 +54,26 @@
 // }
 pipeline {
     agent any
-
     tools {
         nodejs 'NodeJS'
     }
-
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code...'
                 checkout scm
             }
         }
-
         stage('Test') {
             steps {
-                echo 'Testing...'
                 sh 'node -v'
                 sh 'npm -v'
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t my-node-app:2.0 .'
             }
         }
-
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
@@ -91,18 +84,6 @@ pipeline {
                     '''
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Cleaning up...'
-        }
-        success {
-            echo 'Build completed successfully!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
 }
