@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:2.0
 WORKDIR /usr/src/app
 COPY test/package*.json ./
 RUN npm install && npm run build
