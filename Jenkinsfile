@@ -6,8 +6,9 @@ pipeline {
     }
 
     environment {
-        DOCKER_HUB_USER = "ten_tai_khoan_dockerhub"
-        DOCKER_IMAGE = "ten_tai_khoan_dockerhub/my-node-app"
+        // DOCKER_HUB_USER = "ten_tai_khoan_dockerhub"
+        // DOCKER_IMAGE = "ten_tai_khoan_dockerhub/my-node-app"
+        DOCKER_HUB_REPO ="vodongtao2/test_push"
     }
 
     stages {
