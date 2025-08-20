@@ -53,13 +53,15 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword
-                    (credentialsId: 'testpush'
-                    , usernameVariable: 'USER', 
-                    passwordVariable: 'PASS')]) {
-                        sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh "docker vodongtao/node-app:2.0 $DOCKER_HUB_REPO:latest"
-                        sh "docker push $DOCKER_HUB_REPO:latest"
-                    }
+                    (credentialsId: 'testpush', 
+                    usernameVariable: 'DOCKER_USER', 
+                    passwordVariable: 'DOCKER_PASS'
+                    )]) {
+                        sh '''
+                        'echo $PASS | docker login -u $USER --password-stdin'
+                        sh "docker vodongtao/node-app:2.0 
+                        docker logout
+                        '''
                 }
             }
     }
