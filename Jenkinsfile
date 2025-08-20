@@ -33,9 +33,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t $DOCKER_IMAGE:latest .'
-                }
+                sh 'docker build -t my-node-app:2.0. '
+                // script {
+                //     sh 'docker build -t $DOCKER_IMAGE:latest .'
+                // }
             }
         }
 
@@ -49,12 +50,6 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
 
 
 // pipeline {
