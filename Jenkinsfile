@@ -57,7 +57,7 @@ pipeline {
                     , usernameVariable: 'USER', 
                     passwordVariable: 'PASS')]) {
                         sh 'echo $PASS | docker login -u $USER --password-stdin'
-                        sh "docker tag my-node-app:2.0 $DOCKER_HUB_REPO:latest"
+                        sh "docker vodongtao/node-app:2.0 $DOCKER_HUB_REPO:latest"
                         sh "docker push $DOCKER_HUB_REPO:latest"
                     }
                 }
