@@ -1,30 +1,29 @@
 pipeline {
-    agent any
 
+    agent any
     tools {
-        nodejs 'NodeJS '
+        nodejs "Nodejs"
+
     }
     stages {
-
-        stage('checkout') {
-            steps { 
-
-             checkout scm
-                
+        stages ('checkout') {
+            stage('checkout') {
+                steps {
+                    checkout scm
+                }
             }
         }
-    }
-        stage('Test') {
+        stage('Test'){
             steps {
-               
-         sh 'node -v'
-         sh 'npm -v'
-                
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
-    stage('Build Docker Image') {
-         steps{
-        sh'npm run build -t my-node-app:2.0 .'
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t my-node-app:2.0 .'
+                // sh 'npm run build'
+            }
         }
     }
 }
