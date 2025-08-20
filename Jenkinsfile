@@ -50,29 +50,35 @@ pipeline {
         //     }
         // }
         // ----------------------------
-    //     stage('Push to Docker Hub') {
-    //         steps {
-    //             script {
-    //                 withCredentials([usernamePassword
-    //                 (credentialsId: 'testpush'
-    //                 , usernameVariable: 'USER', 
-    //                 passwordVariable: 'PASS'
-    //                 )]) {
-    //                     sh 'echo $PASS | docker login -u $USER --password-stdin'
-    //                     sh "docker vodongtao/node-app:2.0 $DOCKER_HUB_REPO:latest"
-    //                     sh "docker push $DOCKER_HUB_REPO:latest"
-    //                 }
-    //             }
-    //         }
-    // }
-    stage('Push to Docker Hub') {
-    steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-            sh 'echo $PASS | docker login -u $USER --password-stdin'
-            sh 'docker push vodongdao/my-node-app:2.0'
-        }
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'testpush', 
+                        usernameVariable: 'USER', 
+                        passwordVariable: 'PASS'
+                    )]) {
+
+                     sh '''
+                        echo $PASS | docker login -u $USER --password-stdin
+                        docker tag my-node-app:2.0 $DOCKER_HUB_REPO:2.0   # tag image local thành image trên DockerHub
+                        docker push $DOCKER_HUB_REPO:2.0
+                        docker logout
+                    '''
+                    }
+                }
+            }
     }
-}
+
+
+//     stage('Push to Docker Hub') {
+//     steps {
+//         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+//             sh 'echo $PASS | docker login -u $USER --password-stdin'
+//             sh 'docker push vodongdao/my-node-app:2.0'
+//         }
+//     }
+// }
 
 }
 }
