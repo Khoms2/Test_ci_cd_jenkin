@@ -23,7 +23,7 @@ pipeline {
                 sh 'npm -v'
             }
         }
-
+        
         stage('Build App') {
             steps {
                 sh 'npm install'
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh 'docker push $DOCKER_IMAGE:latest'
+                      sh 'docker build -t my-node-app:2.0 .'
                 }
             }
         }
