@@ -6,10 +6,10 @@ pipeline {
 
     }
     stages {
-        stages ('checkout') {
+    
             stage('checkout') {
                 steps {
-                    checkout scm
+                  git branch: 'main', url: 'https://github.com/Khoms2/Test_ci_cd_jenkin.git'
                 }
             }
         }
@@ -19,11 +19,14 @@ pipeline {
                 sh 'npm -v'
             }
         }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t my-node-app:2.0 .'
-                // sh 'npm run build'
-            }
-        }
     }
 }
