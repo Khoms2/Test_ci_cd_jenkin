@@ -41,16 +41,31 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        // stage('Push Docker Image') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+        //             sh 'echo $PASS | docker login -u $USER --password-stdin'
+        //               sh 'docker build -t my-node-app:2.0 .'
+        //         }
+        //     }
+        // }
+        stage('Push to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh 'echo $PASS | docker login -u $USER --password-stdin'
-                      sh 'docker build -t my-node-app:2.0 .'
+                script {
+                    withCredentials([usernamePassword
+                    (credentialsId: 'testpush'
+                    , usernameVariable: 'USER', 
+                    passwordVariable: 'PASS')]) {
+                        sh 'echo $PASS | docker login -u $USER --password-stdin'
+                        sh "docker tag my-node-app:2.0 $DOCKER_HUB_REPO:latest"
+                        sh "docker push $DOCKER_HUB_REPO:latest"
+                    }
                 }
             }
-        }
     }
 }
+}
+
 
 
 // pipeline {
