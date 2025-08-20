@@ -30,3 +30,4 @@ pipeline {
                 sh 'docker build -t my-node-app:2.0 .'
     }
 }
+}
