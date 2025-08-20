@@ -41,34 +41,35 @@ pipeline {
             }
         }
 
-        // stage('Push Docker Image') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-        //             sh 'echo $PASS | docker login -u $USER --password-stdin'
-        //               sh 'docker build -t my-node-app:2.0 .'
-        //         }
-        //     }
-        // }
-        // ----------------------------
-        stage('Push to Docker Hub') {
+        stage('Push Docker Image') {
             steps {
-                script {
-                    withCredentials([usernamePassword(
-                        credentialsId: 'testpush', 
-                        usernameVariable: 'USER', 
-                        passwordVariable: 'PASS'
-                    )]) {
-
-                     sh '''
-                        echo $PASS | docker login -u $USER --password-stdin
-                        docker tag my-node-app:2.0 $DOCKER_HUB_REPO:2.0   # tag image local thành image trên DockerHub
-                        docker push $DOCKER_HUB_REPO:2.0
-                        docker logout
-                    '''
-                    }
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                      sh 'docker build -t my-node-app:2.0 khom202/test_push:2.0'
+                      sh 'docker push khom202/test_push:2.0'
                 }
             }
-    }
+        }
+        // ----------------------------
+    //     stage('Push to Docker Hub') {
+    //         steps {
+    //             script {
+    //                 withCredentials([usernamePassword(
+    //                     credentialsId: 'testpush', 
+    //                     usernameVariable: 'USER', 
+    //                     passwordVariable: 'PASS'
+    //                 )]) {
+
+    //                  sh '''
+    //                     echo $PASS | docker login -u $USER --password-stdin
+    //                     docker tag my-node-app:2.0 $DOCKER_HUB_REPO:2.0   # tag image local thành image trên DockerHub
+    //                     docker push $DOCKER_HUB_REPO:2.0
+    //                     docker logout
+    //                 '''
+    //                 }
+    //             }
+    //         }
+    // }
 
 
 //     stage('Push to Docker Hub') {
